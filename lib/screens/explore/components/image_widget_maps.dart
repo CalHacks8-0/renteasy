@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:renteasy/constants.dart';
 import 'package:renteasy/model/rental.dart';
+import 'package:renteasy/screens/explore/rental_details.dart';
 
 import '../mapscreen.dart';
 
@@ -68,7 +69,7 @@ class MapsImageWidget extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(18),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.favorite_border,
                     ),
                   ),
@@ -202,7 +203,7 @@ class MapsImageWidget extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return MapScreen();
+                            return ItemDetailScreen(Constants.houseList[1], 1);
                           },
                         ),
                       );
