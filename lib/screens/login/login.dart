@@ -49,7 +49,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: Stack(
         children: [
-          // Lets add some decorations
           Positioned(
               top: 100,
               right: -50,
@@ -60,7 +59,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     borderRadius: BorderRadius.circular(50),
                     color: kPrimaryColor),
               )),
-
           Positioned(
               top: -50,
               left: -50,
@@ -71,8 +69,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     borderRadius: BorderRadius.circular(100),
                     color: kPrimaryColor),
               )),
-
-          // Cancel Button
           CancelBtn(
             isLogin: isLogin,
             animationDuration: animationDuration,
@@ -81,22 +77,17 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             tapEvent: isLogin
                 ? () {}
                 : () {
-                    // returning null to disable the button
                     animationController.reverse();
                     setState(() {
                       isLogin = !isLogin;
                     });
                   },
           ),
-
-          // Login Form
           LoginForm(
               isLogin: isLogin,
               animationDuration: animationDuration,
               size: size,
               defaultLoginSize: defaultLoginSize),
-
-          // Register Container
           AnimatedBuilder(
             animation: animationController,
             builder: (context, child) {
@@ -106,12 +97,9 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                 return buildRegisterContainer();
               }
 
-              // Returning empty container to hide the widget
               return Container();
             },
           ),
-
-          // Register Form
           RegisterForm(
               isLogin: isLogin,
               animationDuration: animationDuration,

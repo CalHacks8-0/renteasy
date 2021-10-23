@@ -97,8 +97,6 @@ class _RegisterFormState extends State<RegisterForm> {
                             border: InputBorder.none),
                       ),
                     ),
-                    // const RoundedInput(icon: Icons.mail, hint: 'Username'),
-                    //const RoundedInput(icon: Icons.face_rounded, hint: 'Name'),
                     InputContainer(
                       child: TextField(
                         cursorColor: kPrimaryColor,
@@ -112,7 +110,6 @@ class _RegisterFormState extends State<RegisterForm> {
                             border: InputBorder.none),
                       ),
                     ),
-
                     const SizedBox(height: 10),
                     RoundedButton(
                       title: 'SIGN UP',
