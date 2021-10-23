@@ -66,7 +66,7 @@ class ImageWidget extends StatelessWidget {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(18),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.favorite_border,
                     ),
                   ),
@@ -113,8 +113,10 @@ class ImageWidget extends StatelessWidget {
             house.bedrooms.toString() +
                 " bedrooms / " +
                 house.bathrooms.toString() +
-                " bathrooms / ",
-            style: TextStyle(
+                " bathrooms / " +
+                house.rating.toString() +
+                " ⭐",
+            style: const TextStyle(
               fontSize: 15,
             ),
           ),

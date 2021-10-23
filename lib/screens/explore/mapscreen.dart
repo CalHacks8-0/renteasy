@@ -2,6 +2,8 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'components/modal_fit.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -16,7 +18,7 @@ class _MapScreenState extends State<MapScreen> {
 
   void addRadius() {
     warningcircle.add(
-      Circle(
+      const Circle(
           circleId: CircleId("0"),
           center: LatLng(49.933611, -119.401389),
           radius: 1000,
@@ -39,33 +41,17 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     googleMapMarker.add(
       Marker(
-          markerId: MarkerId("id"), // a string for marker unique id
-          icon: BitmapDescriptor
-              .defaultMarker, // options for hues and custom imgs
-          position: const LatLng(
-              49.934793318231065, -119.40051134095724), // lat and long doubles
-
+          markerId: const MarkerId("id"),
+          icon: BitmapDescriptor.defaultMarker,
+          position: const LatLng(49.934793318231065, -119.40051134095724),
           onTap: () {
             //this is what you're looking for!
-            showModalBottomSheet(
-              isDismissible: true,
-              barrierColor: Colors.transparent,
-              isScrollControlled: true,
+            showFloatingModalBottomSheet(
               context: context,
-              builder: (BuildContext context) => SingleChildScrollView(
-                child: Container(
-                  height: 60,
-                  padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom),
-                  child: const Center(
-                    child: Text("Location"),
-                  ),
-                ),
-              ),
+              builder: (context) => ModalFit(),
             );
           }),
     );
@@ -83,8 +69,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     CameraPosition initialCameraPosition = const CameraPosition(
       target: LatLng(49.933611, -119.401389),
-      zoom: 15,
-      tilt: 0,
+      zoom: 18,
+      tilt: 15,
     );
     return Scaffold(
         body: Stack(
@@ -121,4 +107,44 @@ class _MapScreenState extends State<MapScreen> {
       ],
     ));
   }
+}
+
+class ModalSheetWithPadding extends StatelessWidget {
+  final Widget child;
+  final Color? backgroundColor;
+
+  const ModalSheetWithPadding(
+      {Key? key, required this.child, this.backgroundColor})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Material(
+          color: backgroundColor,
+          clipBehavior: Clip.antiAlias,
+          borderRadius: BorderRadius.circular(12),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+Future<T> showFloatingModalBottomSheet<T>({
+  required BuildContext context,
+  required WidgetBuilder builder,
+  Color? backgroundColor,
+}) async {
+  final result = await showCustomModalBottomSheet(
+      context: context,
+      builder: builder,
+      containerWidget: (_, animation, child) => ModalSheetWithPadding(
+            child: child,
+          ),
+      expand: false);
+
+  return result;
 }
