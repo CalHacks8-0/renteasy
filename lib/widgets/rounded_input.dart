@@ -13,12 +13,13 @@ class RoundedInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputContainer(
-        child: TextField(
-      cursorColor: kPrimaryColor,
-      decoration: InputDecoration(
-          icon: Icon(icon, color: kPrimaryColor),
-          hintText: hint,
-          border: InputBorder.none),
-    ));
+      child: TextField(
+        cursorColor: kPrimaryColor,
+        decoration: InputDecoration(
+            icon: Icon(icon, color: kPrimaryColor),
+            hintText: hint,
+            border: InputBorder.none),
+      ),
+    );
   }
 }

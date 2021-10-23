@@ -11,13 +11,14 @@ class RoundedPasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputContainer(
-        child: TextField(
-      cursorColor: kPrimaryColor,
-      obscureText: true,
-      decoration: InputDecoration(
-          icon: const Icon(Icons.lock, color: kPrimaryColor),
-          hintText: hint,
-          border: InputBorder.none),
-    ));
+      child: TextField(
+        cursorColor: kPrimaryColor,
+        obscureText: true,
+        decoration: InputDecoration(
+            icon: const Icon(Icons.lock, color: kPrimaryColor),
+            hintText: hint,
+            border: InputBorder.none),
+      ),
+    );
   }
 }
