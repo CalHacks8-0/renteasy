@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "857775301755",
+    "project_id": "calhacksbackend",
+    "storage_bucket": "calhacksbackend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857775301755:android:e4a2e67981580a7dfa2ede",
+        "android_client_info": {
+          "package_name": "com.example.renteasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857775301755-mqm4rkptk44u09aj9k5m04g5gid42afh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeYais2F1wY1OyB1au1DMQ_AK4g1F7YOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857775301755-mqm4rkptk44u09aj9k5m04g5gid42afh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
