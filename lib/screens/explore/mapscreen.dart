@@ -41,7 +41,34 @@ class _MapScreenState extends State<MapScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // addGrandpaIcon();
+    googleMapMarker.add(
+      Marker(
+          markerId: MarkerId("id"), // a string for marker unique id
+          icon: BitmapDescriptor
+              .defaultMarker, // options for hues and custom imgs
+          position: const LatLng(
+              49.934793318231065, -119.40051134095724), // lat and long doubles
+
+          onTap: () {
+            //this is what you're looking for!
+            showModalBottomSheet(
+              isDismissible: true,
+              barrierColor: Colors.transparent,
+              isScrollControlled: true,
+              context: context,
+              builder: (BuildContext context) => SingleChildScrollView(
+                child: Container(
+                  height: 60,
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: const Center(
+                    child: Text("Location"),
+                  ),
+                ),
+              ),
+            );
+          }),
+    );
 
     _getCurrentLocation();
   }
@@ -57,7 +84,7 @@ class _MapScreenState extends State<MapScreen> {
     CameraPosition initialCameraPosition = const CameraPosition(
       target: LatLng(49.933611, -119.401389),
       zoom: 15,
-      tilt: 50,
+      tilt: 0,
     );
     return Scaffold(
         body: Stack(
