@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:renteasy/constants.dart';
-import 'package:renteasy/model/rental.dart';
-import 'package:renteasy/screens/explore/rental_details.dart';
+import 'package:thecompany/constants.dart';
+import 'package:thecompany/model/rental.dart';
+import 'package:thecompany/screens/explore/rental_details.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 

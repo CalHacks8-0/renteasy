@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:renteasy/widgets/input_container.dart';
-import 'package:renteasy/widgets/rounded_button.dart';
+import 'package:thecompany/widgets/input_container.dart';
+import 'package:thecompany/widgets/rounded_button.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../../../constants.dart';

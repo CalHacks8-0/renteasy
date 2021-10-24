@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:renteasy/screens/explore/components/image_widget_maps.dart';
+import 'package:thecompany/screens/explore/components/image_widget_maps.dart';
 
 import '../../../constants.dart';
 

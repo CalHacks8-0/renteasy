@@ -1,12 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:renteasy/model/rental.dart';
-import 'package:renteasy/screens/explore/mapscreen.dart';
+import 'package:thecompany/model/rental.dart';
+import 'package:thecompany/screens/explore/mapscreen.dart';
 
 import '../../constants.dart';
 import 'components/image_widget.dart';

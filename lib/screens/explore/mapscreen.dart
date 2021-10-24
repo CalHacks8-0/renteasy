@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:renteasy/constants.dart';
+import 'package:thecompany/constants.dart';
 import 'components/modal_fit.dart';
 
 class MapScreen extends StatefulWidget {
