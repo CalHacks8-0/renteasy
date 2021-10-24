@@ -46,6 +46,7 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   carousel_pro: ^1.0.0
   rounded_loading_button: ^2.0.8
+  flutter_switch: ^0.3.2
 
 
   geolocator: 
