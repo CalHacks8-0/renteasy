@@ -1,6 +1,6 @@
-# renteasy
+# thecompany
 
-An awesome Flutter project.
+A new Flutter project.
 
 Run the application using the following command:
 ```

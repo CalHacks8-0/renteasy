@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:renteasy/constants.dart';
+import 'package:thecompany/constants.dart';
 
 class CancelBtn extends StatelessWidget {
   const CancelBtn(

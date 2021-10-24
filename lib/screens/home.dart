@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:renteasy/constants.dart';
-import 'package:renteasy/screens/chat/chatscreen.dart';
-import 'package:renteasy/screens/explore/explorescreen.dart';
-import 'package:renteasy/screens/myprofile/myprofile.dart';
+import 'package:thecompany/constants.dart';
+import 'package:thecompany/screens/chat/chatscreen.dart';
+import 'package:thecompany/screens/explore/explorescreen.dart';
+import 'package:thecompany/screens/myprofile/myprofile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Home extends StatefulWidget {

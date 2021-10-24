@@ -1,17 +1,18 @@
 import 'dart:async';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:renteasy/model/rental.dart';
+import 'package:thecompany/model/rental.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'dart:math';
+import 'package:thecompany/model/rental.dart';
+
 import '../../constants.dart';
 import 'components/menu_widget.dart';
-import 'mapscreen.dart';
 
 class RentalDetailScreen extends StatelessWidget {
   Rental house;

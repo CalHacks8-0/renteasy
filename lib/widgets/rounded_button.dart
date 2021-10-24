@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:renteasy/constants.dart';
+import 'package:thecompany/constants.dart';
 
 class RoundedButton extends StatelessWidget {
   const RoundedButton({Key? key, required this.title, required this.ontap})

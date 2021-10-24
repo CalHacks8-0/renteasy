@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:renteasy/screens/login/components/login_form.dart';
-import 'package:renteasy/screens/login/components/register_form.dart';
+import 'package:thecompany/screens/login/components/login_form.dart';
+import 'package:thecompany/screens/login/components/register_form.dart';
 import 'package:flutter/services.dart';
 
 import '../../constants.dart';
