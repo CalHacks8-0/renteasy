@@ -10,24 +10,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-
+import 'package:at_utils/at_logger.dart';
+import 'package:at_client_mobile/at_client_mobile.dart';
+import 'package:at_app_flutter/at_app_flutter.dart';
+import 'package:at_onboarding_flutter/at_onboarding_flutter.dart';
 import '../../../constants.dart';
+import '../../../main.dart';
 
 class RegisterForm extends StatefulWidget {
-  RegisterForm(
-      {Key? key,
-      required this.isLogin,
-      required this.animationDuration,
-      required this.size,
-      required this.defaultLoginSize,
-      required this.registrationSuccess})
-      : super(key: key);
+  RegisterForm({
+    Key? key,
+    required this.isLogin,
+    required this.animationDuration,
+    required this.size,
+    required this.defaultLoginSize,
+  }) : super(key: key);
 
   final bool isLogin;
   final Duration animationDuration;
   final Size size;
   final double defaultLoginSize;
-  final Function() registrationSuccess;
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -40,6 +42,9 @@ class _RegisterFormState extends State<RegisterForm> {
   late String userName;
   late bool isOwner = true;
   late String password;
+  Future<AtClientPreference> futurePreference = loadAtClientPreference();
+  AtClientPreference? atClientPreference;
+  final AtSignLogger _logger = AtSignLogger(AtEnv.appNamespace);
 
   CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
@@ -172,7 +177,24 @@ class _RegisterFormState extends State<RegisterForm> {
                               await _auth.createUserWithEmailAndPassword(
                                   email: email, password: password);
                           if (newUser != null) {
-                            widget.registrationSuccess();
+                            // var preference = await futurePreference;
+                            // setState(() {
+                            //   atClientPreference = preference;
+                            // });
+                            // Onboarding(
+                            //   context: context,
+                            //   atClientPreference: atClientPreference!,
+                            //   domain: 'root.atsign.wtf',
+                            //   rootEnvironment: AtEnv.rootEnvironment,
+                            //   appAPIKey: '477b-876u-bcez-c42z-6a3d',
+                            //   onboard: (value, atsign) {
+                            //     _logger.finer('Successfully onboarded $atsign');
+                            //   },
+                            //   onError: (error) {
+                            //     _logger.severe('Onboarding throws $error error');
+                            //   },
+                            //   nextScreen: Home(),
+                            // );
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
