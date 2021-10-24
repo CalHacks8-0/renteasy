@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:thecompany/constants.dart';
@@ -13,6 +14,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Future<bool> isLandlord() async {
+    var result = await FirebaseFirestore.instance
+        .collection("users")
+        .where("email", isEqualTo: "aliyev7138@gmail.com")
+        .get();
+    print('Result is: ${result}');
+    return Future.value(false);
+  }
+
+  @override
+  void initState() {
+    isLandlord();
+    super.initState();
+  }
+
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {

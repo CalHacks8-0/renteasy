@@ -52,33 +52,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'RentEazy',
+      title: 'RentEasy',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           primaryColor: kPrimaryColor,
           textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme)),
-      home: Login(
-        afterLoginSuccess: () async {
-          var preference = await futurePreference;
-          setState(() {
-            atClientPreference = preference;
-          });
-          Onboarding(
-            context: context,
-            atClientPreference: atClientPreference!,
-            domain: FlutterConfig.get('domain'),
-            rootEnvironment: AtEnv.rootEnvironment,
-            appAPIKey: FlutterConfig.get('appAPIKey'),
-            onboard: (value, atsign) {
-              _logger.finer('Successfully onboarded $atsign');
-            },
-            onError: (error) {
-              _logger.severe('Onboarding throws $error error');
-            },
-            nextScreen: Home(),
-          );
-        },
-      ),
+      home: Login(),
     );
   }
 }

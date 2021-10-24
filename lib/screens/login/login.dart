@@ -8,10 +8,6 @@ import '../../constants.dart';
 import 'components/cancel_btn.dart';
 
 class Login extends StatefulWidget {
-  Function() afterLoginSuccess;
-
-  Login({required this.afterLoginSuccess});
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -92,7 +88,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             animationDuration: animationDuration,
             size: size,
             defaultLoginSize: defaultLoginSize,
-            loginSuccess: widget.afterLoginSuccess,
           ),
           AnimatedBuilder(
             animation: animationController,
@@ -111,7 +106,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             animationDuration: animationDuration,
             size: size,
             defaultLoginSize: defaultRegisterSize,
-            registrationSuccess: widget.afterLoginSuccess,
           ),
         ],
       ),
