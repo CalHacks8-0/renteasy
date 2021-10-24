@@ -173,7 +173,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           // add the username and isOwner thing
                           await userCollection.doc(userId).set({
                             'name': userName,
-                            'isOwner': false,
+                            'isOwner': isOwner,
                           });
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => Home()));
