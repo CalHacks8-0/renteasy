@@ -25,7 +25,7 @@ class RentalDetailScreen extends StatelessWidget {
     // "3",
   ];
   final typeArray = [
-    "Size (m^2)",
+    "Square Foot",
     "Bedrooms",
     "Bedrooms",
     "Garage",
