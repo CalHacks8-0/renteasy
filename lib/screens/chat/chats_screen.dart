@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 
 class ChatsScreen extends StatelessWidget {
   static final String id = '/chat';
+  final String name;
+
+  ChatsScreen(this.name);
 
   @override
   Widget build(BuildContext context) {
     final title = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
-      appBar: AppBar(title: Text('Chat')),
+      appBar: AppBar(title: const Text('Chat')),
       body: ChatScreen(
         height: MediaQuery.of(context).size.height,
         incomingMessageColor: Colors.green[100]!,

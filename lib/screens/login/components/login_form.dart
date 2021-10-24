@@ -1,3 +1,5 @@
+import 'package:at_chat_flutter/utils/init_chat_service.dart';
+import 'package:at_contacts_flutter/utils/init_contacts_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -113,16 +115,27 @@ class _LoginFormState extends State<LoginForm> {
                             email: email, password: password);
                         if (user != null) {
                           var preference = await futurePreference;
+                          var atClientManager = AtClientManager.getInstance();
+
                           setState(() {
                             atClientPreference = preference;
                           });
                           Onboarding(
+                            atsign: '@ugly64shrimp',
                             context: context,
                             atClientPreference: atClientPreference!,
                             domain: 'root.atsign.org',
                             rootEnvironment: RootEnvironment.Production,
                             appAPIKey: '477b-876u-bcez-c42z-6a3d',
                             onboard: (value, atsign) {
+                              initializeContactsService(
+                                  rootDomain: AtEnv.rootDomain);
+                              initializeChatService(
+                                AtClientManager.getInstance(),
+                                atsign!,
+                                rootDomain: AtEnv.rootDomain,
+                              );
+
                               _logger.finer('Successfully onboarded $atsign');
                             },
                             onError: (error) {
@@ -130,6 +143,7 @@ class _LoginFormState extends State<LoginForm> {
                             },
                             nextScreen: Home(),
                           );
+
                           // Navigator.push(context,
                           //     MaterialPageRoute(builder: (context) {
                           //   return Home();
