@@ -20,7 +20,7 @@ class Rental {
   GeoPoint geoPoint;
   List<Review> reviews;
   String address;
-  int id;
+  String id;
 }
 
 class Review {

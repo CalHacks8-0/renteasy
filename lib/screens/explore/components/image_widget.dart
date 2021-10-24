@@ -4,14 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:renteasy/constants.dart';
 import 'package:renteasy/model/rental.dart';
+import 'package:renteasy/screens/explore/rental_details.dart';
 
 class ImageWidget extends StatelessWidget {
   Rental house;
-  int imgpath_index;
   List<String> imageList;
 
-  ImageWidget(this.house, this.imgpath_index, this.imageList, {Key? key})
-      : super(key: key);
+  ImageWidget(this.house, this.imageList, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +22,15 @@ class ImageWidget extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => ItemDetailScreen(
-            //       this.house,
-            //       this.imgpath_index,
-            //       this.imageList,
-            //     ),
-            //   ),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RentalDetailScreen(
+                  house,
+                  imageList,
+                ),
+              ),
+            );
           },
           child: Container(
             height: 160,

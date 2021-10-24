@@ -10,13 +10,10 @@ import '../../constants.dart';
 import 'components/menu_widget.dart';
 import 'mapscreen.dart';
 
-class ItemDetailScreen extends StatelessWidget {
+class RentalDetailScreen extends StatelessWidget {
   Rental house;
-  int imgpath_index;
-  ItemDetailScreen(
-    this.house,
-    this.imgpath_index,
-  );
+  List<String> imageList;
+  RentalDetailScreen(this.house, this.imageList);
   final houseArray = [
     "1.416",
     "4",
@@ -35,12 +32,8 @@ class ItemDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
-    final oCcy = new NumberFormat("##,##,###", "en_INR");
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: ColorConstant.kWhiteColor,
-      ),
-    );
+    final oCcy = NumberFormat("##,##,###", "en_INR");
+
     return Scaffold(
       backgroundColor: ColorConstant.kWhiteColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -119,21 +112,10 @@ class ItemDetailScreen extends StatelessWidget {
                       height: 200.0,
                       width: screenWidth,
                       child: Carousel(
-                        images: const [
-                          ExactAssetImage(
-                              'assets/images/default-apartment.jpg'),
-                          ExactAssetImage(
-                              'assets/images/default-apartment.jpg'),
-                          ExactAssetImage(
-                              'assets/images/default-apartment.jpg'),
-                          ExactAssetImage(
-                              'assets/images/default-apartment.jpg'),
-                          ExactAssetImage(
-                              'assets/images/default-apartment.jpg'),
-                          ExactAssetImage(
-                              'assets/images/default-apartment.jpg'),
-                          ExactAssetImage(
-                              'assets/images/default-apartment.jpg'),
+                        images: [
+                          NetworkImage(imageList[0]),
+                          NetworkImage(imageList[1]),
+                          NetworkImage(imageList[2])
                         ],
                         showIndicator: true,
                         borderRadius: false,

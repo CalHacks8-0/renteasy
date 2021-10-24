@@ -224,68 +224,18 @@ class _ExploreScreenState extends State<ExploreScreen> {
               const SizedBox(
                 height: 10,
               ),
-              // ignore: unnecessary_null_comparison
-              // rentalList != null
-              //     ? Expanded(
-              //         child: ListView.builder(
-              //         physics: const BouncingScrollPhysics(),
-              //         scrollDirection: Axis.vertical,
-              //         shrinkWrap: true,
-              //         padding: EdgeInsets.all(10),
-              //         itemCount: rentalList.length,
-              //         itemBuilder: (context, index) {
-              //           List<Review> reviews = [];
-              //           List.from(rentalList[index].data())
-              //               .forEach((element) {
-              //             print("Rental Author: ${element['author']}");
-              //             Review review = Review(
-              //                 author: element['author'],
-              //                 description: element['description'],
-              //                 starRating: element['starRating'],
-              //                 title: element['title']);
-              //             reviews.add(review);
-              //           });
-
-              //           GeoPoint geoPoint =
-              //               (rentalList[index].data() as dynamic)['location'];
-              //           Rental rentalHouse = Rental(
-              //               id: index,
-              //               amount:
-              //                   (rentalList[index].data() as dynamic)['amount'],
-              //               address:
-              //                   (rentalList[index].data() as dynamic)['address'],
-              //               bedrooms:
-              //                   (rentalList[index].data() as dynamic)['bedrooms'],
-              //               bathrooms: (rentalList[index].data()
-              //                   as dynamic)['bathrooms'],
-              //               owner: (rentalList[index].data() as dynamic)['owner'],
-              //               rating:
-              //                   (rentalList[index].data() as dynamic)['rating'],
-              //               reviews: reviews,
-              //               geoPoint: geoPoint);
-              //           List<String> imagePictures = List.from(
-              //               (rentalList[index].data() as dynamic)['images']);
-              //           return ImageWidget(rentalHouse, index, imagePictures);
-              //         },
-              //       ))
-              //     : Expanded(
-              //         child: Container(
-              //           child: Center(
-              //             child: Text("Empty Listing"),
-              //           ),
-              //         ),
-              //       )
               StreamBuilder(
                   stream: _rentalsStream,
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
-                      return Text('Something went wrong');
+                      return const Text('Something went wrong');
                     }
 
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text("Loading");
+                      return const Text("Loading");
                     }
+
                     return ListView(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.vertical,
@@ -295,10 +245,36 @@ class _ExploreScreenState extends State<ExploreScreen> {
                           snapshot.data!.docs.map((DocumentSnapshot document) {
                         Map<String, dynamic> data =
                             document.data()! as Map<String, dynamic>;
-                        return ListTile(
-                          title: Text(data['address']),
-                          subtitle: Text(data['description']),
-                        );
+
+                        List<Review> reviews = [];
+
+                        //List.from(rentalList[index].data())
+                        //               .forEach((element) {
+                        //             print("Rental Author: ${element['author']}");
+                        //             Review review = Review(
+                        //                 author: element['author'],
+                        //                 description: element['description'],
+                        //                 starRating: element['starRating'],
+                        //                 title: element['title']);
+                        //             reviews.add(review);
+                        //           });
+                        // List<String> reviewData = snapshot.data.docs.;
+
+                        // print('Review Data: ${snapshot.data!.docs.}');
+                        GeoPoint geoPoint = data['location'];
+                        print('Document ID: ${document.id}');
+                        Rental rentalHouse = Rental(
+                            id: '',
+                            amount: data['amount'],
+                            address: data['address'],
+                            bedrooms: data['bedrooms'],
+                            bathrooms: data['bathrooms'],
+                            owner: data['owner'],
+                            rating: 0,
+                            reviews: reviews,
+                            geoPoint: geoPoint);
+                        List<String> imagePictures = List.from(data['images']);
+                        return ImageWidget(rentalHouse, imagePictures);
                       }).toList(),
                     );
                   })
