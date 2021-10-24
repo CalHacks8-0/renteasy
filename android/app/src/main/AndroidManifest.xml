@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
    
    <application
-        android:label="thecompany"
+        android:label="RentEasy"
         android:icon="@mipmap/ic_launcher">
 
         <meta-data android:name="com.google.android.geo.API_KEY"

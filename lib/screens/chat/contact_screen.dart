@@ -33,6 +33,7 @@ class _ContactScreenState extends State<ContactScreen> {
   @override
   Widget build(BuildContext context) {
     return ContactsScreen(
+      context: context,
       onSendIconPressed: (String atsign) => _goToChat(context, atsign),
     );
   }

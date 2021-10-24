@@ -68,15 +68,19 @@ class MyProfile extends StatelessWidget {
                           Color.fromRGBO(137, 169, 221, 1)
                         ])),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 3),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
                   child: Column(
                     children: [
-                      Text(
-                        "My Profile",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Color(0xffffffff)),
+                      Container(
+                        margin: EdgeInsets.only(top: 15),
+                        child: Text(
+                          "My Profile",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                              color: Color(0xffffffff)),
+                        ),
                       ),
                       Container(
                           padding: EdgeInsets.symmetric(

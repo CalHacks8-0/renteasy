@@ -112,28 +112,28 @@ class _LoginFormState extends State<LoginForm> {
                         final user = await _auth.signInWithEmailAndPassword(
                             email: email, password: password);
                         if (user != null) {
-                          // var preference = await futurePreference;
-                          // setState(() {
-                          //   atClientPreference = preference;
-                          // });
-                          // Onboarding(
-                          //   context: context,
-                          //   atClientPreference: atClientPreference!,
-                          //   domain: 'root.atsign.wtf',
-                          //   rootEnvironment: AtEnv.rootEnvironment,
-                          //   appAPIKey: '477b-876u-bcez-c42z-6a3d',
-                          //   onboard: (value, atsign) {
-                          //     _logger.finer('Successfully onboarded $atsign');
-                          //   },
-                          //   onError: (error) {
-                          //     _logger.severe('Onboarding throws $error error');
-                          //   },
-                          //   nextScreen: Home(),
-                          // );
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return Home();
-                          }));
+                          var preference = await futurePreference;
+                          setState(() {
+                            atClientPreference = preference;
+                          });
+                          Onboarding(
+                            context: context,
+                            atClientPreference: atClientPreference!,
+                            domain: 'root.atsign.org',
+                            rootEnvironment: RootEnvironment.Production,
+                            appAPIKey: '477b-876u-bcez-c42z-6a3d',
+                            onboard: (value, atsign) {
+                              _logger.finer('Successfully onboarded $atsign');
+                            },
+                            onError: (error) {
+                              _logger.severe('Onboarding throws $error error');
+                            },
+                            nextScreen: Home(),
+                          );
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (context) {
+                          //   return Home();
+                          // }));
                         }
                         setState(() {
                           showSpinner = false;
