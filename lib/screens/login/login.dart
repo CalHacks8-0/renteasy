@@ -8,6 +8,10 @@ import '../../constants.dart';
 import 'components/cancel_btn.dart';
 
 class Login extends StatefulWidget {
+  Function() afterLoginSuccess;
+
+  Login({required this.afterLoginSuccess});
+
   @override
   _LoginState createState() => _LoginState();
 }
@@ -21,7 +25,6 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIOverlays([]);
 
     animationController =
         AnimationController(vsync: this, duration: animationDuration);
@@ -60,15 +63,16 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                     color: kPrimaryColor),
               )),
           Positioned(
-              top: -50,
-              left: -50,
-              child: Container(
-                width: 200,
-                height: 200,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    color: kPrimaryColor),
-              )),
+            top: -50,
+            left: -50,
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: kPrimaryColor),
+            ),
+          ),
           CancelBtn(
             isLogin: isLogin,
             animationDuration: animationDuration,
@@ -84,10 +88,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
                   },
           ),
           LoginForm(
-              isLogin: isLogin,
-              animationDuration: animationDuration,
-              size: size,
-              defaultLoginSize: defaultLoginSize),
+            isLogin: isLogin,
+            animationDuration: animationDuration,
+            size: size,
+            defaultLoginSize: defaultLoginSize,
+            loginSuccess: widget.afterLoginSuccess,
+          ),
           AnimatedBuilder(
             animation: animationController,
             builder: (context, child) {
@@ -101,10 +107,12 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
             },
           ),
           RegisterForm(
-              isLogin: isLogin,
-              animationDuration: animationDuration,
-              size: size,
-              defaultLoginSize: defaultRegisterSize),
+            isLogin: isLogin,
+            animationDuration: animationDuration,
+            size: size,
+            defaultLoginSize: defaultRegisterSize,
+            registrationSuccess: widget.afterLoginSuccess,
+          ),
         ],
       ),
     );

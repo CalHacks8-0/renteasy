@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:thecompany/constants.dart';
-import 'package:thecompany/screens/chat/chatscreen.dart';
+import 'package:thecompany/screens/chat/chats_screen.dart';
+import 'package:thecompany/screens/chat/contact_screen.dart';
 import 'package:thecompany/screens/explore/explorescreen.dart';
 import 'package:thecompany/screens/myprofile/myprofile.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -57,9 +58,9 @@ class _HomeState extends State<Home> {
       case 0:
         return ExploreScreen();
       case 1:
-        return ChatScreen();
+        return const ContactScreen();
       case 2:
-        return MyProfile();
+        return const MyProfile();
       default:
         return ExploreScreen();
     }

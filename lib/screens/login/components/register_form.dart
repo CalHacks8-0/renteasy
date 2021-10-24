@@ -12,18 +12,20 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../../../constants.dart';
 
 class RegisterForm extends StatefulWidget {
-  RegisterForm({
-    Key? key,
-    required this.isLogin,
-    required this.animationDuration,
-    required this.size,
-    required this.defaultLoginSize,
-  }) : super(key: key);
+  RegisterForm(
+      {Key? key,
+      required this.isLogin,
+      required this.animationDuration,
+      required this.size,
+      required this.defaultLoginSize,
+      required this.registrationSuccess})
+      : super(key: key);
 
   final bool isLogin;
   final Duration animationDuration;
   final Size size;
   final double defaultLoginSize;
+  final Function() registrationSuccess;
 
   @override
   State<RegisterForm> createState() => _RegisterFormState();
@@ -123,6 +125,7 @@ class _RegisterFormState extends State<RegisterForm> {
                               await _auth.createUserWithEmailAndPassword(
                                   email: email, password: password);
                           if (newUser != null) {
+                            widget.registrationSuccess();
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

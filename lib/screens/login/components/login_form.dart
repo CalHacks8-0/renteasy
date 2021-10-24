@@ -16,12 +16,14 @@ class LoginForm extends StatefulWidget {
     required this.animationDuration,
     required this.size,
     required this.defaultLoginSize,
+    required this.loginSuccess,
   }) : super(key: key);
 
   final bool isLogin;
   final Duration animationDuration;
   final Size size;
   final double defaultLoginSize;
+  final Function() loginSuccess;
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -103,6 +105,7 @@ class _LoginFormState extends State<LoginForm> {
                         final user = await _auth.signInWithEmailAndPassword(
                             email: email, password: password);
                         if (user != null) {
+                          widget.loginSuccess();
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => Home()));
                         }

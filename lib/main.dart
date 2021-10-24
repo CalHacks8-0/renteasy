@@ -1,122 +1,54 @@
-// import 'dart:async';
+import 'dart:async';
 
-// import 'package:flutter/material.dart';
-// import 'package:at_client_mobile/at_client_mobile.dart';
-// import 'package:at_onboarding_flutter/at_onboarding_flutter.dart';
-// import 'package:at_utils/at_logger.dart';
-// import 'package:path_provider/path_provider.dart' as path_provider;
-// import 'package:at_app_flutter/at_app_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:at_client_mobile/at_client_mobile.dart';
+import 'package:at_onboarding_flutter/at_onboarding_flutter.dart';
+import 'package:at_utils/at_logger.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:at_app_flutter/at_app_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:thecompany/screens/home.dart';
+import 'package:thecompany/screens/login/login.dart';
+import 'package:flutter_config/flutter_config.dart';
 
+import 'constants.dart';
 // void main() {
 //   AtEnv.load();
 //   runApp(const MyApp());
 // }
 
-// Future<AtClientPreference> loadAtClientPreference() async {
-//   var dir = await path_provider.getApplicationSupportDirectory();
-//   return AtClientPreference()
-//         ..rootDomain = AtEnv.rootDomain
-//         ..namespace = AtEnv.appNamespace
-//         ..hiveStoragePath = dir.path
-//         ..commitLogPath = dir.path
-//         ..isLocalStoreRequired = true
-//       // TODO set the rest of your AtClientPreference here
-//       ;
-// }
-
-// class MyApp extends StatefulWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   // * load the AtClientPreference in the background
-//   Future<AtClientPreference> futurePreference = loadAtClientPreference();
-//   AtClientPreference? atClientPreference;
-
-//   final AtSignLogger _logger = AtSignLogger(AtEnv.appNamespace);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       // * The onboarding screen (first screen)
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: const Text('MyApp'),
-//         ),
-//         body: Builder(
-//           builder: (context) => Center(
-//             child: ElevatedButton(
-//               onPressed: () async {
-//                 var preference = await futurePreference;
-//                 setState(() {
-//                   atClientPreference = preference;
-//                 });
-//                 Onboarding(
-
-//                   onboard: (value, atsign) {
-//                     _logger.finer('Successfully onboarded $atsign');
-//                   },
-//                   onError: (error) {
-//                     _logger.severe('Onboarding throws $error error');
-//                   },
-//                   nextScreen: const HomeScreen(),
-//                 );
-//               },
-//               child: const Text('Onboard an @sign'),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// //* The next screen after onboarding (second screen)
-// class HomeScreen extends StatelessWidget {
-//   const HomeScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     /// Get the AtClientManager instance
-//     var atClientManager = AtClientManager.getInstance();
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Dashboard'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           children: [
-//             const Text(
-//                 'Successfully onboarded and navigated to FirstAppScreen'),
-
-//             /// Use the AtClientManager instance to get the current atsign
-//             Text(
-//                 'Current @sign: ${atClientManager.atClient.getCurrentAtSign()}'),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:thecompany/screens/login/login.dart';
-
-import 'constants.dart';
+Future<AtClientPreference> loadAtClientPreference() async {
+  var dir = await path_provider.getApplicationSupportDirectory();
+  return AtClientPreference()
+        ..rootDomain = AtEnv.rootDomain
+        ..namespace = AtEnv.appNamespace
+        ..hiveStoragePath = dir.path
+        ..commitLogPath = dir.path
+        ..isLocalStoreRequired = true
+      // TODO set the rest of your AtClientPreference here
+      ;
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  AtEnv.load();
+  await FlutterConfig.loadEnvVariables();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Future<AtClientPreference> futurePreference = loadAtClientPreference();
+  AtClientPreference? atClientPreference;
+
+  final AtSignLogger _logger = AtSignLogger(AtEnv.appNamespace);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -125,7 +57,28 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primaryColor: kPrimaryColor,
           textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme)),
-      home: Login(),
+      home: Login(
+        afterLoginSuccess: () async {
+          var preference = await futurePreference;
+          setState(() {
+            atClientPreference = preference;
+          });
+          Onboarding(
+            context: context,
+            atClientPreference: atClientPreference!,
+            domain: FlutterConfig.get('domain'),
+            rootEnvironment: AtEnv.rootEnvironment,
+            appAPIKey: FlutterConfig.get('appAPIKey'),
+            onboard: (value, atsign) {
+              _logger.finer('Successfully onboarded $atsign');
+            },
+            onError: (error) {
+              _logger.severe('Onboarding throws $error error');
+            },
+            nextScreen: Home(),
+          );
+        },
+      ),
     );
   }
 }
