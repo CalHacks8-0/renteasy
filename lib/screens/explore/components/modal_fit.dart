@@ -16,7 +16,8 @@ class ModalFit extends StatelessWidget {
             child: Container(
               height: 300,
               padding: const EdgeInsets.all(5),
-              child: MapsImageWidget(Constants.houseList[0], 0),
+              //child: MapsImageWidget(Constants.houseList[0], 0),
+              child: const SizedBox(),
             )));
   }
 }

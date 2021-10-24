@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Rental {
   Rental(
       {required this.id,
@@ -7,20 +9,29 @@ class Rental {
       required this.bathrooms,
       required this.owner,
       required this.rating,
-      required this.longitude,
-      required this.latitude,
-      required this.review1,
-      required this.review2});
+      required this.geoPoint,
+      required this.reviews});
 
   int amount;
   int bedrooms;
   int bathrooms;
-  int rating;
+  double rating;
   String owner;
-  String longitude;
-  String latitude;
-  String review1;
-  String review2;
+  GeoPoint geoPoint;
+  List<Review> reviews;
   String address;
   int id;
+}
+
+class Review {
+  String author;
+  String description;
+  double starRating;
+  String title;
+
+  Review(
+      {required this.author,
+      required this.description,
+      required this.starRating,
+      required this.title});
 }

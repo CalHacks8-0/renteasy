@@ -1,12 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+import 'package:renteasy/model/rental.dart';
 import 'package:renteasy/screens/explore/mapscreen.dart';
 
 import '../../constants.dart';
 import 'components/image_widget.dart';
 
-class ExploreScreen extends StatelessWidget {
+class ExploreScreen extends StatefulWidget {
+  @override
+  State<ExploreScreen> createState() => _ExploreScreenState();
+}
+
+class _ExploreScreenState extends State<ExploreScreen> {
   final filterArray = [
     "<\$220.000",
     "For sale",
@@ -14,12 +24,35 @@ class ExploreScreen extends StatelessWidget {
     "Kitchen",
   ];
 
+  List<DocumentSnapshot> rentalList = [];
+  late StreamSubscription<QuerySnapshot> rentalListSubscription;
+  final Stream<QuerySnapshot> _rentalsStream =
+      FirebaseFirestore.instance.collection('rentalListings').snapshots();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // rentalListSubscription = collectionReference.snapshots().listen((event) {
+    //   setState(() {
+    //     rentalList = event.docs;
+    //   });
+    // });
+  }
+
+  @override
+  void dispose() {
+    rentalListSubscription.cancel();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    //    final oCcy = new NumberFormat("##,##,###", "en_INR");
-    var screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: ColorConstant.kWhiteColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
@@ -191,21 +224,84 @@ class ExploreScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              Column(
-                children: List.generate(
-                  Constants.houseList.length,
-                  (index) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                      child: ImageWidget(
-                        Constants.houseList[index],
-                        index,
-                        // Constants.imageList,
-                      ),
+              // ignore: unnecessary_null_comparison
+              // rentalList != null
+              //     ? Expanded(
+              //         child: ListView.builder(
+              //         physics: const BouncingScrollPhysics(),
+              //         scrollDirection: Axis.vertical,
+              //         shrinkWrap: true,
+              //         padding: EdgeInsets.all(10),
+              //         itemCount: rentalList.length,
+              //         itemBuilder: (context, index) {
+              //           List<Review> reviews = [];
+              //           List.from(rentalList[index].data())
+              //               .forEach((element) {
+              //             print("Rental Author: ${element['author']}");
+              //             Review review = Review(
+              //                 author: element['author'],
+              //                 description: element['description'],
+              //                 starRating: element['starRating'],
+              //                 title: element['title']);
+              //             reviews.add(review);
+              //           });
+
+              //           GeoPoint geoPoint =
+              //               (rentalList[index].data() as dynamic)['location'];
+              //           Rental rentalHouse = Rental(
+              //               id: index,
+              //               amount:
+              //                   (rentalList[index].data() as dynamic)['amount'],
+              //               address:
+              //                   (rentalList[index].data() as dynamic)['address'],
+              //               bedrooms:
+              //                   (rentalList[index].data() as dynamic)['bedrooms'],
+              //               bathrooms: (rentalList[index].data()
+              //                   as dynamic)['bathrooms'],
+              //               owner: (rentalList[index].data() as dynamic)['owner'],
+              //               rating:
+              //                   (rentalList[index].data() as dynamic)['rating'],
+              //               reviews: reviews,
+              //               geoPoint: geoPoint);
+              //           List<String> imagePictures = List.from(
+              //               (rentalList[index].data() as dynamic)['images']);
+              //           return ImageWidget(rentalHouse, index, imagePictures);
+              //         },
+              //       ))
+              //     : Expanded(
+              //         child: Container(
+              //           child: Center(
+              //             child: Text("Empty Listing"),
+              //           ),
+              //         ),
+              //       )
+              StreamBuilder(
+                  stream: _rentalsStream,
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text("Loading");
+                    }
+                    return ListView(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(5),
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+                        return ListTile(
+                          title: Text(data['address']),
+                          subtitle: Text(data['description']),
+                        );
+                      }).toList(),
                     );
-                  },
-                ),
-              ),
+                  })
             ],
           ),
         ),

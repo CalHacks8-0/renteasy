@@ -8,17 +8,14 @@ import 'package:renteasy/model/rental.dart';
 class ImageWidget extends StatelessWidget {
   Rental house;
   int imgpath_index;
-  // List<String> imageList;
+  List<String> imageList;
 
-  ImageWidget(
-    this.house,
-    this.imgpath_index,
-    //  this.imageList,
-  );
+  ImageWidget(this.house, this.imgpath_index, this.imageList, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final oCcy = new NumberFormat("##,##,###", "en_INR");
+    final oCcy = NumberFormat("##,##,###", "en_INR");
     var screenWidth = MediaQuery.of(context).size.width;
 
     return Column(
@@ -40,17 +37,15 @@ class ImageWidget extends StatelessWidget {
           child: Container(
             height: 160,
             width: screenWidth,
-            padding: EdgeInsets.only(left: 12, right: 12),
+            padding: const EdgeInsets.only(left: 12, right: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
-              color: kPrimaryColor,
-              // image: DecorationImage(
-              //   fit: BoxFit.fill,
-
-              //   image: AssetImage(
-              //     imageList[imgpath_index],
-              //   ),
-              // ),
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: NetworkImage(
+                  imageList[0],
+                ),
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -90,7 +85,7 @@ class ImageWidget extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text(
