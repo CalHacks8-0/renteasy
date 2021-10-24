@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:renteasy/model/rental.dart';
+import 'package:renteasy/constants.dart';
 import 'components/modal_fit.dart';
 
 class MapScreen extends StatefulWidget {
@@ -49,24 +49,56 @@ class _MapScreenState extends State<MapScreen> {
     mapController.setMapStyle(style);
   }
 
+  List<String> prices = [];
+  List<GeoPoint> geoPoint = [];
+  List<String> ids = [];
+
   @override
   void initState() {
     super.initState();
-    googleMapMarker.add(
-      Marker(
-          markerId: const MarkerId("id"),
-          icon: BitmapDescriptor.defaultMarker,
-          position: const LatLng(49.934793318231065, -119.40051134095724),
-          onTap: () {
-            //this is what you're looking for!
-            showFloatingModalBottomSheet(
-              context: context,
-              builder: (context) => ModalFit(),
-            );
-          }),
-    );
+    addPoints();
+    for (int i = 0; i < prices.length; i++) {
+      setState(() {
+        addMarker('\$${prices[i]}', geoPoint[i], ids[i]);
+      });
+    }
+    addMarker(
+        '\$850', const GeoPoint(49.934793318231065, -119.40051134095724), 'id');
+    addMarker('\$1000', const GeoPoint(49.9382361, -119.4018663), 'id1');
+    addMarker('\$900', const GeoPoint(49.93308, -119.40312), 'id2');
+    addMarker('\$975', const GeoPoint(49.93459, -119.39974), 'id3');
+    addMarker(
+        '\$700', const GeoPoint(49.93100546797583, -119.39898569024542), 'id4');
 
     _getCurrentLocation();
+  }
+
+  void addPoints() async {
+    FirebaseFirestore.instance
+        .collection('rentalListings')
+        .snapshots()
+        .map((event) => {
+              event.docs.forEach((DocumentSnapshot document) async {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                prices.add(data['amount']);
+                geoPoint.add(data['location']);
+                ids.add(document.id);
+                // GeoPoint geoPoint = data['location'];
+                // print('Maps ID: ${document.id}');
+                // Rental rentalHouse = Rental(
+                //     id: '',
+                //     amount: data['amount'],
+                //     address: data['address'],
+                //     bedrooms: data['bedrooms'],
+                //     bathrooms: data['bathrooms'],
+                //     owner: data['owner'],
+                //     rating: 0,
+                //     reviews: [],
+                //     geoPoint: geoPoint);
+                // List<String> imagePictures = List.from(data['images']);
+              })
+            });
   }
 
   void mapCreated(GoogleMapController controller) {
@@ -75,8 +107,25 @@ class _MapScreenState extends State<MapScreen> {
     addMap();
   }
 
+  void addMarker(String price, GeoPoint point, String id) async {
+    print("Map ID: $id");
+    BitmapDescriptor bitmapDescriptor = await createCustomMarkerBitmap(price);
+    googleMapMarker.add(
+      Marker(
+          markerId: MarkerId(id),
+          icon: bitmapDescriptor,
+          position: LatLng(point.latitude, point.longitude),
+          onTap: () {
+            showFloatingModalBottomSheet(
+              context: context,
+              builder: (context) => ModalFit(),
+            );
+          }),
+    );
+  }
+
   Future<BitmapDescriptor> createCustomMarkerBitmap(String title) async {
-    TextSpan span = new TextSpan(
+    TextSpan span = TextSpan(
       style: const TextStyle(
         color: Colors.black,
         fontSize: 35.0,
@@ -85,26 +134,27 @@ class _MapScreenState extends State<MapScreen> {
       text: title,
     );
 
-    TextPainter tp = new TextPainter(
+    TextPainter tp = TextPainter(
       text: span,
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     );
     tp.text = TextSpan(
       text: title.toString(),
-      style: TextStyle(
-        fontSize: 35.0,
-        color: Theme.of(context).accentColor,
+      style: const TextStyle(
+        fontSize: 50.0,
+        backgroundColor: kPrimaryColor,
+        color: Colors.black,
         letterSpacing: 1.0,
         fontFamily: 'Roboto Bold',
       ),
     );
 
-    PictureRecorder recorder = new PictureRecorder();
-    Canvas c = new Canvas(recorder);
+    PictureRecorder recorder = PictureRecorder();
+    Canvas c = Canvas(recorder);
 
     tp.layout();
-    tp.paint(c, new Offset(20.0, 10.0));
+    tp.paint(c, const Offset(20.0, 10.0));
 
     /* Do your painting of the custom icon here, including drawing text, shapes, etc. */
 
@@ -140,40 +190,6 @@ class _MapScreenState extends State<MapScreen> {
                 return const Text("Loading");
               }
 
-              snapshot.data!.docs.map((DocumentSnapshot document) async {
-                Map<String, dynamic> data =
-                    document.data()! as Map<String, dynamic>;
-
-                GeoPoint geoPoint = data['location'];
-                print('Document ID: ${document.id}');
-                Rental rentalHouse = Rental(
-                    id: '',
-                    amount: data['amount'],
-                    address: data['address'],
-                    bedrooms: data['bedrooms'],
-                    bathrooms: data['bathrooms'],
-                    owner: data['owner'],
-                    rating: 0,
-                    reviews: [],
-                    geoPoint: geoPoint);
-                List<String> imagePictures = List.from(data['images']);
-                BitmapDescriptor bitmapDescriptor =
-                    await createCustomMarkerBitmap(data['amount']);
-
-                googleMapMarker.add(
-                  Marker(
-                      markerId: const MarkerId("id"),
-                      icon: bitmapDescriptor,
-                      position: LatLng(geoPoint.latitude, geoPoint.longitude),
-                      onTap: () {
-                        showFloatingModalBottomSheet(
-                          context: context,
-                          builder: (context) => ModalFit(),
-                        );
-                      }),
-                );
-              }).toList();
-
               return Stack(
                 children: [
                   Positioned.fill(
@@ -182,9 +198,8 @@ class _MapScreenState extends State<MapScreen> {
                       initialCameraPosition: initialCameraPosition,
                       markers: googleMapMarker,
                       circles: warningcircle,
-                      tiltGesturesEnabled: false,
                       myLocationEnabled: true,
-                      myLocationButtonEnabled: true,
+                      buildingsEnabled: true,
                     ),
                   ),
                   Positioned(
