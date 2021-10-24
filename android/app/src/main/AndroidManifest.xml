@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
-
    <application
         android:label="renteasy"
         android:icon="@mipmap/ic_launcher">

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:renteasy/model/rental.dart';
 
@@ -12,4 +13,19 @@ class ColorConstant {
   static const kBlackColor = Colors.black;
   static const kGreyColor = Colors.grey;
   static const kGreenColor = Colors.green;
+}
+
+class Constants {
+  static List<Rental> rentalList = [
+    Rental(
+        id: '',
+        amount: 850,
+        address: '935 Academy Way',
+        bedrooms: 3,
+        bathrooms: 2,
+        geoPoint: const GeoPoint(49.934793318231065, -119.40051134095724),
+        owner: "Samir Aliyev",
+        rating: 4.5,
+        reviews: []),
+  ];
 }

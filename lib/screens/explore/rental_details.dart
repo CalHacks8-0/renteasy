@@ -155,7 +155,7 @@ class RentalDetailScreen extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: EdgeInsets.only(left: 15, top: 10),
+                padding: const EdgeInsets.only(left: 15, top: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -164,16 +164,16 @@ class RentalDetailScreen extends StatelessWidget {
                       children: [
                         Text(
                           '\$' + "${oCcy.format(house.amount)}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 5),
+                          padding: const EdgeInsets.only(top: 5),
                           child: Text(
                             house.address,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 13,
                               color: Colors.grey,
                             ),
