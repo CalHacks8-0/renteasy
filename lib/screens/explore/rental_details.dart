@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:renteasy/model/rental.dart';
-
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'dart:math';
 import '../../constants.dart';
 import 'components/menu_widget.dart';
 import 'mapscreen.dart';
@@ -21,14 +22,14 @@ class RentalDetailScreen extends StatelessWidget {
     "4",
     "2",
     "2",
-    "3",
+    // "3",
   ];
   final typeArray = [
-    "Square foot",
+    "Size (m^2)",
     "Bedrooms",
     "Bedrooms",
     "Garage",
-    "Kitchen",
+    // "Kitchen",
   ];
   void _doSomething(RoundedLoadingButtonController controller) async {
     Timer(const Duration(seconds: 2), () {
@@ -36,6 +37,7 @@ class RentalDetailScreen extends StatelessWidget {
     });
   }
 
+  final houseRating = 4.18;
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -241,6 +243,25 @@ class RentalDetailScreen extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+              ),
+              RatingBar.builder(
+                initialRating: houseRating,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  print(rating);
+                },
+                ignoreGestures: true,
+              ),
+              const SizedBox(
+                height: 20,
               ),
               Container(
                 height: 110,

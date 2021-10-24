@@ -47,3 +47,4 @@ app.*.map.json
 ios/Runner/GoogleService-Info.plist
 ios/Runner/AppDelegate.swift
 
+flutter_*.png
