@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:renteasy/constants.dart';
 import 'package:renteasy/model/rental.dart';
 import 'package:renteasy/screens/explore/rental_details.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../mapscreen.dart';
 
@@ -18,11 +21,18 @@ class MapsImageWidget extends StatelessWidget {
     //  this.imageList,
   );
 
+  void _doSomething(RoundedLoadingButtonController controller) async {
+    Timer(const Duration(seconds: 2), () {
+      controller.success();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final oCcy = NumberFormat("##,##,###", "en_INR");
     var screenWidth = MediaQuery.of(context).size.width;
-
+    final RoundedLoadingButtonController _btnController2 =
+        RoundedLoadingButtonController();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -135,60 +145,77 @@ class MapsImageWidget extends StatelessWidget {
                   width: 100,
                   margin:
                       const EdgeInsets.symmetric(horizontal: 1, vertical: 3),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return MapScreen();
-                          },
-                        ),
-                      );
-                    },
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all<EdgeInsets>(
-                            const EdgeInsets.all(1)),
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            ColorConstant.kFABBackColor),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(75.0),
-                                    side: const BorderSide(
-                                        color: ColorConstant.kFABBackColor)))),
-                    child: Ink(
-                      decoration: BoxDecoration(
-                        color: ColorConstant.kFABBackColor,
-                        borderRadius: BorderRadius.circular(75.0),
-                      ),
-                      child: Container(
-                        constraints: const BoxConstraints(
-                          maxWidth: 300.0,
-                          minHeight: 50.0,
-                        ),
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            // Icon(
-                            //   Icons.,
-                            //   color: Colors.white,
-                            // ),
-                            Text(
-                              "Apply",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  child: RoundedLoadingButton(
+                    successIcon: Icons.done,
+                    failedIcon: Icons.cottage,
+                    child: const Text('Apply',
+                        style: TextStyle(color: Colors.white)),
+                    controller: _btnController2,
+                    onPressed: () => _doSomething(_btnController2),
+                    borderRadius: 75,
+                    color: ColorConstant.kFABBackColor,
+                    successColor: kPrimaryColor,
                   ),
                 ),
+                // Container(
+                //   height: 40,
+                //   width: 100,
+                //   margin:
+                //       const EdgeInsets.symmetric(horizontal: 1, vertical: 3),
+                //   child: ElevatedButton(
+                //     onPressed: () {
+                //       Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) {
+                //             return MapScreen();
+                //           },
+                //         ),
+                //       );
+                //     },
+                //     style: ButtonStyle(
+                //         padding: MaterialStateProperty.all<EdgeInsets>(
+                //             const EdgeInsets.all(1)),
+                //         foregroundColor: MaterialStateProperty.all<Color>(
+                //             ColorConstant.kFABBackColor),
+                //         shape:
+                //             MaterialStateProperty.all<RoundedRectangleBorder>(
+                //                 RoundedRectangleBorder(
+                //                     borderRadius: BorderRadius.circular(75.0),
+                //                     side: const BorderSide(
+                //                         color: ColorConstant.kFABBackColor)))),
+                //     child: Ink(
+                //       decoration: BoxDecoration(
+                //         color: ColorConstant.kFABBackColor,
+                //         borderRadius: BorderRadius.circular(75.0),
+                //       ),
+                //       child: Container(
+                //         constraints: const BoxConstraints(
+                //           maxWidth: 300.0,
+                //           minHeight: 50.0,
+                //         ),
+                //         alignment: Alignment.center,
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: const [
+                //             // Icon(
+                //             //   Icons.,
+                //             //   color: Colors.white,
+                //             // ),
+                //             Text(
+                //               "Apply",
+                //               textAlign: TextAlign.center,
+                //               style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontSize: 15,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 1, vertical: 3),

@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
-
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:renteasy/model/rental.dart';
 
@@ -28,76 +30,93 @@ class RentalDetailScreen extends StatelessWidget {
     "Garage",
     "Kitchen",
   ];
+  void _doSomething(RoundedLoadingButtonController controller) async {
+    Timer(const Duration(seconds: 2), () {
+      controller.success();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     final oCcy = NumberFormat("##,##,###", "en_INR");
+    final RoundedLoadingButtonController _btnController2 =
+        RoundedLoadingButtonController();
 
     return Scaffold(
       backgroundColor: ColorConstant.kWhiteColor,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 10,
-          horizontal: 0,
-        ),
-        width: screenWidth,
-        child: Container(
-          height: 55,
-          width: 150,
-          child: FloatingActionButton(
-            elevation: 5,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return MapScreen();
-                  },
-                ),
-              );
-            },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(75.0),
-            ),
-            heroTag: null,
-            child: Ink(
-              decoration: BoxDecoration(
-                color: ColorConstant.kFABBackColor,
-                borderRadius: BorderRadius.circular(75.0),
-              ),
-              child: Container(
-                constraints: const BoxConstraints(
-                  maxWidth: 300.0,
-                  minHeight: 50.0,
-                ),
-                alignment: Alignment.center,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.explore,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 80,
-                      child: Text(
-                        "Apply",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
+      floatingActionButton: RoundedLoadingButton(
+        successIcon: Icons.done,
+        failedIcon: Icons.cottage,
+        child: const Text('Apply', style: TextStyle(color: Colors.white)),
+        controller: _btnController2,
+        onPressed: () => _doSomething(_btnController2),
+        borderRadius: 75,
+        color: ColorConstant.kFABBackColor,
+        successColor: kPrimaryColor,
       ),
+      // floatingActionButton: Container(
+      //   padding: const EdgeInsets.symmetric(
+      //     vertical: 10,
+      //     horizontal: 0,
+      //   ),
+      //   width: screenWidth,
+      //   child: Container(
+      //     height: 55,
+      //     width: 150,
+      //     padding: const EdgeInsets.symmetric(horizontal: 35),
+      //     child: FloatingActionButton(
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) {
+      //               return MapScreen();
+      //             },
+      //           ),
+      //         );
+      //       },
+      //       shape: RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.circular(75.0),
+      //       ),
+      //       heroTag: null,
+      //       child: Ink(
+      //         decoration: BoxDecoration(
+      //           color: ColorConstant.kFABBackColor,
+      //           borderRadius: BorderRadius.circular(75.0),
+      //         ),
+      //         child: Container(
+      //           constraints: const BoxConstraints(
+      //             maxWidth: 300.0,
+      //             minHeight: 50.0,
+      //           ),
+      //           alignment: Alignment.center,
+      //           child: Row(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             children: const [
+      //               Icon(
+      //                 Icons.done,
+      //                 color: Colors.white,
+      //               ),
+      //               SizedBox(
+      //                 width: 80,
+      //                 child: Text(
+      //                   "Apply",
+      //                   textAlign: TextAlign.center,
+      //                   style: TextStyle(
+      //                     color: Colors.white,
+      //                     fontSize: 15,
+      //                   ),
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.only(top: 25, bottom: 0),
