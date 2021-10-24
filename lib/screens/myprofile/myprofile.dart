@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../constants.dart';
+import 'components/profile_image_container.dart';
+
 class MyProfile extends StatelessWidget {
   const MyProfile({Key? key}) : super(key: key);
 
@@ -128,36 +131,11 @@ class MyProfile extends StatelessWidget {
                     ],
                   ),
                 )),
-            Container(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 3, horizontal: 12),
-                      child: Text(
-                        "Current Apartment",
-                        style: TextStyle(fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    // list the current Apartment
-                    Column(
-                      children: [
-                        getApartmentCard(context, "Davidson Residence",
-                            "221B Baker Street, Earth"),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
+            ProfileImageWidget(Constants.rentalList[0], const [
+              'https://firebasestorage.googleapis.com/v0/b/calhacksbackend.appspot.com/o/h3Img1.jpg?alt=media&token=40e9885f-e9d1-4727-b618-34d082f7ad57',
+              'https://firebasestorage.googleapis.com/v0/b/calhacksbackend.appspot.com/o/h3Img2.jpg?alt=media&token=ce724f47-6fc5-4c5e-9cad-c1cb5d75936c',
+              'https://firebasestorage.googleapis.com/v0/b/calhacksbackend.appspot.com/o/h2Img3.jpg?alt=media&token=261e8227-e66b-40ed-af41-62069dcafde2'
+            ]),
             SizedBox(
               height: 20,
             ),
